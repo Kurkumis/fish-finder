@@ -1,0 +1,11 @@
+.venv/
+data/
+artifacts/
+runs/
+__pycache__/
+*.pyc
+*.pt
+*.pth
+*.npy
+*.faiss
+.ipynb_checkpoints/

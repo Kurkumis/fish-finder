@@ -1,0 +1,78 @@
+import time
+import torch
+
+def sync():
+    torch.cuda.synchronize()
+
+def main():
+    print(f"torch: {torch.__version__}")
+    print(f"HIP (ROCm): {torch.version.hip}")
+    print(f"GPU доступна: {torch.cuda.is_available()}")
+    if not torch.cuda.is_available():
+        print("GPU не найдена")
+        return
+
+    props = torch.cuda.get_device_properties(0)
+    print(f"Устройство: {props.name}, VRAM: {props.total_memory / 1024**3:.1f} ГБ")
+    dev = torch.device("cuda")
+
+    # Совпадают ли результаты на CPU и GPU
+    a = torch.randn(256, 256)
+    ok = torch.allclose(a @ a, (a.to(dev) @ a.to(dev)).cpu(), atol=1e-3)
+    print(f"Результаты CPU и GPU совпадают: {ok}")
+
+    # Скорость матричного умножения
+    x = torch.randn(4096, 4096, device=dev)
+    _ = x @ x
+    sync()
+    t = time.perf_counter()
+    for _ in range(20):
+        _ = x @ x
+    sync()
+    print(f"matmul 4096x4096 x20: {time.perf_counter() - t:.2f} с")
+
+    # Реальные архитектуры: прямой и обратный проход, fp32 и fp16
+    try:
+        import timm
+    except ImportError:
+        print("timm не установлен, пропуск теста моделей")
+        return
+
+    models = {
+        "convnext_tiny": {},
+        "tf_efficientnetv2_s": {},
+        "vit_small_patch14_dinov2.lvd142m": {"img_size": 224},
+    }
+    for name, kwargs in models.items():
+        try:
+            model = timm.create_model(name, pretrained=False, num_classes=0, **kwargs).to(dev)
+            opt = torch.optim.AdamW(model.parameters(), lr=1e-4)
+            imgs = torch.randn(32, 3, 224, 224, device=dev)
+            for amp in (False, True):
+                torch.cuda.reset_peak_memory_stats()
+                scaler = torch.amp.GradScaler("cuda", enabled=amp)
+
+                def step():
+                    with torch.autocast("cuda", dtype=torch.float16, enabled=amp):
+                        loss = model(imgs).float().pow(2).mean()
+                    opt.zero_grad()
+                    scaler.scale(loss).backward()
+                    scaler.step(opt)
+                    scaler.update()
+                    return loss
+
+                step()
+                sync()
+                t = time.perf_counter()
+                for _ in range(5):
+                    loss = step()
+                sync()
+                dt = (time.perf_counter() - t) / 5
+                mem = torch.cuda.max_memory_allocated() / 1024**3
+                print(f"{name:36s} amp={amp!s:5s} {dt*1000:7.0f} мс/итер  "
+                      f"пик памяти {mem:.1f} ГБ  loss конечен: {bool(torch.isfinite(loss))}")
+        except Exception as e:
+            print(f"{name}: ошибка {type(e).__name__}: {e}")
+
+if __name__ == "__main__":
+    main()
