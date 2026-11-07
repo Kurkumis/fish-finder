@@ -1,0 +1,10 @@
+LICENSE
+pyproject.toml
+src/fishfinder/__init__.py
+src/fishfinder.egg-info/PKG-INFO
+src/fishfinder.egg-info/SOURCES.txt
+src/fishfinder.egg-info/dependency_links.txt
+src/fishfinder.egg-info/requires.txt
+src/fishfinder.egg-info/top_level.txt
+src/fishfinder/data_pipeline/__init__.py
+src/fishfinder/utils/__init__.py

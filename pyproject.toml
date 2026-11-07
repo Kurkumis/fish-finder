@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fishfinder"
+version = "0.1.0"
+description = "Fish species recognition and similar-fish search"
+requires-python = ">=3.12"
+# torch, torchvision and torchaudio are intentionally NOT listed:
+# they are installed manually from the AMD ROCm wheels (see README).
+dependencies = [
+    "timm", "numpy", "pandas", "scikit-learn",
+    "matplotlib", "pillow", "pyyaml", "tqdm", "requests",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -7,21 +7,21 @@ def sync():
 def main():
     print(f"torch: {torch.__version__}")
     print(f"HIP (ROCm): {torch.version.hip}")
-    print(f"GPU доступна: {torch.cuda.is_available()}")
+    print(f"is GPU available: {torch.cuda.is_available()}")
     if not torch.cuda.is_available():
-        print("GPU не найдена")
+        print("GPU is not found")
         return
 
     props = torch.cuda.get_device_properties(0)
-    print(f"Устройство: {props.name}, VRAM: {props.total_memory / 1024**3:.1f} ГБ")
+    print(f"Device: {props.name}, VRAM: {props.total_memory / 1024**3:.1f} ГБ")
     dev = torch.device("cuda")
 
-    # Совпадают ли результаты на CPU и GPU
+    # Does CPU and GPU results match
     a = torch.randn(256, 256)
     ok = torch.allclose(a @ a, (a.to(dev) @ a.to(dev)).cpu(), atol=1e-3)
-    print(f"Результаты CPU и GPU совпадают: {ok}")
+    print(f"Does results of CPU and GPU match: {ok}")
 
-    # Скорость матричного умножения
+    # Speed of matrix multiplication
     x = torch.randn(4096, 4096, device=dev)
     _ = x @ x
     sync()
@@ -31,11 +31,10 @@ def main():
     sync()
     print(f"matmul 4096x4096 x20: {time.perf_counter() - t:.2f} с")
 
-    # Реальные архитектуры: прямой и обратный проход, fp32 и fp16
     try:
         import timm
     except ImportError:
-        print("timm не установлен, пропуск теста моделей")
+        print("timm is not installed")
         return
 
     models = {
@@ -69,10 +68,10 @@ def main():
                 sync()
                 dt = (time.perf_counter() - t) / 5
                 mem = torch.cuda.max_memory_allocated() / 1024**3
-                print(f"{name:36s} amp={amp!s:5s} {dt*1000:7.0f} мс/итер  "
-                      f"пик памяти {mem:.1f} ГБ  loss конечен: {bool(torch.isfinite(loss))}")
+                print(f"{name:36s} amp={amp!s:5s} {dt*1000:7.0f} ms/iter  "
+                      f"memory peak {mem:.1f} GB  loss is finite: {bool(torch.isfinite(loss))}")
         except Exception as e:
-            print(f"{name}: ошибка {type(e).__name__}: {e}")
+            print(f"{name}: error {type(e).__name__}: {e}")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,9 @@
+timm
+numpy
+pandas
+scikit-learn
+matplotlib
+pillow
+pyyaml
+tqdm
+requests

@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: fishfinder
+Version: 0.1.0
+Summary: Fish species recognition and similar-fish search
+Requires-Python: >=3.12
+License-File: LICENSE
+Requires-Dist: timm
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: scikit-learn
+Requires-Dist: matplotlib
+Requires-Dist: pillow
+Requires-Dist: pyyaml
+Requires-Dist: tqdm
+Requires-Dist: requests
+Dynamic: license-file
