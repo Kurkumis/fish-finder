@@ -1,0 +1,111 @@
+# Classes predicted by the model (v1).
+# A class may group several iNaturalist taxa that are practically
+# indistinguishable on ordinary photographs.
+# taxon_id values come from data/raw/inaturalist/project_species_counts.csv.
+classes:
+  - id: european_perch
+    name_en: European perch
+    name_ru: Речной окунь
+    taxa:
+      - {taxon_id: 109062, scientific_name: Perca fluviatilis}
+  - id: crucian_carp
+    name_en: Crucian carp (Prussian + crucian)
+    name_ru: Карась
+    taxa:
+      - {taxon_id: 424997, scientific_name: Carassius gibelio}
+      - {taxon_id: 96744, scientific_name: Carassius carassius}
+  - id: northern_pike
+    name_en: Northern pike
+    name_ru: Щука
+    taxa:
+      - {taxon_id: 55387, scientific_name: Esox lucius}
+  - id: amur_sleeper
+    name_en: Amur sleeper
+    name_ru: Ротан-головешка
+    taxa:
+      - {taxon_id: 437871, scientific_name: Perccottus glenii}
+  - id: common_rudd
+    name_en: Common rudd
+    name_ru: Краснопёрка
+    taxa:
+      - {taxon_id: 112118, scientific_name: Scardinius erythrophthalmus}
+  - id: bleak
+    name_en: Bleak
+    name_ru: Уклейка
+    taxa:
+      - {taxon_id: 93611, scientific_name: Alburnus alburnus}
+  - id: common_bream
+    name_en: Common bream
+    name_ru: Лещ
+    taxa:
+      - {taxon_id: 92984, scientific_name: Abramis brama}
+  - id: roach
+    name_en: Roach (common + Siberian)
+    name_ru: Плотва
+    taxa:
+      - {taxon_id: 69989, scientific_name: Rutilus rutilus}
+      - {taxon_id: 1316269, scientific_name: Rutilus lacustris}
+  - id: european_bitterling
+    name_en: European bitterling
+    name_ru: Горчак
+    taxa:
+      - {taxon_id: 111757, scientific_name: Rhodeus amarus}
+  - id: european_chub
+    name_en: European chub
+    name_ru: Голавль
+    taxa:
+      - {taxon_id: 113003, scientific_name: Squalius cephalus}
+  - id: silver_bream
+    name_en: Silver bream
+    name_ru: Густера
+    taxa:
+      - {taxon_id: 95811, scientific_name: Blicca bjoerkna}
+  - id: ruffe
+    name_en: Ruffe
+    name_ru: Ёрш
+    taxa:
+      - {taxon_id: 101887, scientific_name: Gymnocephalus cernua}
+  - id: common_carp
+    name_en: Common carp
+    name_ru: Карп (сазан)
+    taxa:
+      - {taxon_id: 53911, scientific_name: Cyprinus carpio}
+  - id: zander
+    name_en: Zander
+    name_ru: Судак
+    taxa:
+      - {taxon_id: 48156, scientific_name: Sander lucioperca}
+  - id: gudgeon
+    name_en: Gudgeon (Gobio and relatives)
+    name_ru: Пескарь
+    taxa:
+      - {taxon_id: 101597, scientific_name: Gobio volgensis}
+      - {taxon_id: 101585, scientific_name: Gobio gobio}
+      - {taxon_id: 612994, scientific_name: Gobio sibiricus}
+      - {taxon_id: 111856, scientific_name: Romanogobio albipinnatus}
+  - id: ide
+    name_en: Ide
+    name_ru: Язь
+    taxa:
+      - {taxon_id: 104525, scientific_name: Leuciscus idus}
+  - id: minnow
+    name_en: Minnow (Phoxinus)
+    name_ru: Гольян
+    taxa:
+      - {taxon_id: 1545615, scientific_name: Phoxinus isetensis}
+      - {taxon_id: 613388, scientific_name: Phoxinus ujmonensis}
+  - id: tench
+    name_en: Tench
+    name_ru: Линь
+    taxa:
+      - {taxon_id: 114177, scientific_name: Tinca tinca}
+  - id: sunbleak
+    name_en: Sunbleak
+    name_ru: Верховка
+    taxa:
+      - {taxon_id: 104519, scientific_name: Leucaspius delineatus}
+  - id: asp
+    name_en: Asp
+    name_ru: Жерех
+    taxa:
+      - {taxon_id: 613166, scientific_name: Leuciscus aspius}

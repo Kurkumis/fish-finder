@@ -39,14 +39,26 @@ def main():
 
     models = {
         "convnext_tiny": {},
+        "convnext_base": {},
+        "convnext_tiny.in12k_ft_in1k_384": {},
+        "convnextv2_tiny": {},
+        "convnextv2_base": {},
+        "convnextv2_tiny.fcmae_ft_in22k_in1k_384": {},
         "tf_efficientnetv2_s": {},
         "vit_small_patch14_dinov2.lvd142m": {"img_size": 224},
+        "eva02_small_patch14_336.mim_in22k_ft_in1k": {"img_size": 336},
+        "swinv2_tiny_window16_256.ms_in1k": {"img_size": 256},
     }
     for name, kwargs in models.items():
         try:
             model = timm.create_model(name, pretrained=False, num_classes=0, **kwargs).to(dev)
             opt = torch.optim.AdamW(model.parameters(), lr=1e-4)
-            imgs = torch.randn(32, 3, 224, 224, device=dev)
+            if name == "eva02_small_patch14_336.mim_in22k_ft_in1k":
+                imgs = torch.randn(32, 3, 336, 336, device=dev)
+            elif name == "swinv2_tiny_window16_256.ms_in1k":
+                imgs = torch.randn(32, 3, 256, 256, device=dev)
+            else:
+                imgs = torch.randn(32, 3, 224, 224, device=dev)
             for amp in (False, True):
                 torch.cuda.reset_peak_memory_stats()
                 scaler = torch.amp.GradScaler("cuda", enabled=amp)

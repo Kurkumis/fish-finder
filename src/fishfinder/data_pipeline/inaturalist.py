@@ -1,10 +1,8 @@
 """Thin client for the public iNaturalist REST API (v1)."""
 import time
-
 import requests
 
 API_BASE = "https://api.inaturalist.org/v1"
-# A descriptive User-Agent is good API etiquette: it tells the service who is calling.
 USER_AGENT = "fish-finder/0.1 (pet project; https://github.com/Kurkumis/fish-finder)"
 # iNaturalist asks API users to stay at roughly one request per second.
 REQUEST_DELAY_S = 1.0
@@ -19,7 +17,7 @@ def _get(endpoint: str, params: dict, timeout: float = 30.0) -> dict:
         timeout=timeout,
     )
     response.raise_for_status()  # raise an exception on HTTP errors (4xx, 5xx)
-    time.sleep(REQUEST_DELAY_S)  # be polite: throttle requests
+    time.sleep(REQUEST_DELAY_S)  # throttle requests
     return response.json()
 
 
@@ -68,3 +66,30 @@ def fetch_project_species_counts(
             break
         page += 1
     return rows
+
+# Photo licenses that allow reuse (at least for non-commercial purposes).
+# Photos under "all rights reserved" or no-derivatives licenses are excluded.
+OPEN_PHOTO_LICENSES = ("cc0", "cc-by", "cc-by-nc", "cc-by-sa", "cc-by-nc-sa")
+
+
+def count_observations(
+    taxon_id: int,
+    project: str | None = None,
+    quality_grade: str = "research",
+    photo_licenses: tuple[str, ...] = OPEN_PHOTO_LICENSES,
+) -> int:
+    """Count observations of a taxon (descendant taxa included).
+
+    If `project` is given, only observations belonging to that project are
+    counted; otherwise the count covers the whole world.
+    """
+    params = {
+        "taxon_id": taxon_id,
+        "quality_grade": quality_grade,
+        "photo_license": ",".join(photo_licenses),
+        "per_page": 1,  # we only need the total, not the observations themselves
+    }
+    if project is not None:
+        params["project_id"] = project
+    payload = _get("observations", params)
+    return payload["total_results"]
