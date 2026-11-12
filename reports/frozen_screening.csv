@@ -1,0 +1,6 @@
+model,dim,knn_acc,lr_acc,lr_top3,lr_macro_recall
+convnext_tiny.in12k_ft_in1k,768,0.528 ± 0.033,0.625 ± 0.022,0.833 ± 0.030,0.625 ± 0.021
+convnextv2_tiny.fcmae_ft_in22k_in1k,768,0.546 ± 0.026,0.647 ± 0.022,0.846 ± 0.017,0.649 ± 0.024
+vit_small_patch14_dinov2.lvd142m,384,0.546 ± 0.022,0.637 ± 0.024,0.842 ± 0.017,0.640 ± 0.025
+vit_base_patch14_dinov2.lvd142m,768,0.601 ± 0.025,0.735 ± 0.021,0.898 ± 0.017,0.737 ± 0.025
+eva02_small_patch14_336.mim_in22k_ft_in1k,384,0.431 ± 0.018,0.532 ± 0.024,0.785 ± 0.028,0.533 ± 0.021

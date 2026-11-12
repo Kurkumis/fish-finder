@@ -24,6 +24,7 @@ def main() -> None:
     columns = [
         "photo_id", "observation_id", "observer_id", "class_id", "class_index",
         "local_path", "fold", "split", "license", "attribution", "observation_url",
+        "taxon_id", "scientific_name", "position",
     ]
     PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
     df[columns].to_csv(PROCESSED_DIR / "dataset.csv", index=False)

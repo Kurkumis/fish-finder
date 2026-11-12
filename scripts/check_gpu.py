@@ -40,11 +40,10 @@ def main():
     models = {
         "convnext_tiny": {},
         "convnext_base": {},
-        "convnext_tiny.in12k_ft_in1k_384": {},
+        "convnext_tiny.in22k_ft_in1k_384": {},
         "convnextv2_tiny": {},
         "convnextv2_base": {},
         "convnextv2_tiny.fcmae_ft_in22k_in1k_384": {},
-        "tf_efficientnetv2_s": {},
         "vit_small_patch14_dinov2.lvd142m": {"img_size": 224},
         "eva02_small_patch14_336.mim_in22k_ft_in1k": {"img_size": 336},
         "swinv2_tiny_window16_256.ms_in1k": {"img_size": 256},

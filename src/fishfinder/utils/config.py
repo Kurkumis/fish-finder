@@ -9,3 +9,10 @@ def load_classes(path: Path | None = None) -> list[dict]:
     path = path or CONFIGS_DIR / "classes.yaml"
     with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)["classes"]
+
+def load_backbones(path: Path | None = None) -> list[dict]:
+    """Load the list of backbones to screen from configs/screening.yaml."""
+    path = path or CONFIGS_DIR / "screening.yaml"
+    with open(path, encoding="utf-8") as f:
+        return yaml.safe_load(f)["backbones"]
+    
